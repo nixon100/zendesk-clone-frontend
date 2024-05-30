@@ -1101,3 +1101,298 @@ button.sc-hLseeU.bfIGar {
   font-weight: 600;
   font-size: 16px;
 }
+
+.Body_body__box__Y49P- {
+  margin: 96px 0 0 72px;
+  width: calc(100vw - 72px);
+  min-height: calc(100vh - 96px);
+}
+.container-fluid {
+  margin-top: 4.1875rem !important;
+  margin-bottom: 0 !important;
+}
+.container-fluid {
+  margin-top: 0 !important;
+}
+.container-fluid {
+  margin-left: 80px !important;
+}
+.container-fluid {
+  margin-top: 96px !important;
+}
+.col-11 {
+  flex: 0 0 91.666667%;
+  max-width: 91.666667%;
+}
+.col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col-auto, .col-lg, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-auto, .col-md, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md-auto, .col-sm, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-auto {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.detailCards {
+  width: 900px;
+  border: 2px solid #efefef;
+  border-radius: 16px;
+  padding: 40px 60px;
+  margin: 8px auto;
+}
+.personalDetails {
+  display: grid;
+  grid-template-columns: .4fr 1.5fr 2fr;
+  grid-gap: 16px 0;
+  gap: 16px 0;
+}
+.detailCards label {
+  margin: 14px 0 0;
+  font-size: 1rem;
+  grid-column: 2 / 3;
+}
+.label-style {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7e8e9f;
+}
+.mb-0, .my-0 {
+  margin-bottom: 0 !important;
+}
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+}
+.personalDetails input {
+  display: inline-block;
+  grid-column: 3 / 4;
+}
+.formInputs {
+  height: 3.4rem;
+  width: 100%;
+}
+.formInputs {
+  font-size: 1rem;
+  padding: 12px 16px;
+  display: block;
+  border: 1px solid #7e8e9f;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.checkboxContainer, .formInputs {
+  background: #fff;
+  box-sizing: border-box;
+}
+button, input {
+  overflow: visible;
+}
+button, input, optgroup, select, textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.detailCards label {
+  margin: 14px 0 0;
+  font-size: 1rem;
+  grid-column: 2 / 3;
+}
+.label-style {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7e8e9f;
+}
+.mb-0, .my-0 {
+  margin-bottom: 0 !important;
+}
+label {
+  display: inline-block;
+  margin-bottom: .5rem;
+}
+.personalDetails input {
+  display: inline-block;
+  grid-column: 3 / 4;
+}
+.formInputs {
+  height: 3.4rem;
+  width: 100%;
+}
+.formInputs {
+  font-size: 1rem;
+  padding: 12px 16px;
+  display: block;
+  border: 1px solid #7e8e9f;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.checkboxContainer, .formInputs {
+  background: #fff;
+  box-sizing: border-box;
+}
+button, input {
+  overflow: visible;
+}
+button, input, optgroup, select, textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.detailCards {
+  width: 900px;
+  border: 2px solid #efefef;
+  border-radius: 16px;
+  padding: 40px 60px;
+  margin: 8px auto;
+}
+.personalDetails {
+  display: grid;
+  grid-template-columns: .4fr 1.5fr 2fr;
+  grid-gap: 16px 0;
+  gap: 16px 0;
+}
+.detailCards {
+  width: 900px;
+  border: 2px solid #efefef;
+  border-radius: 16px;
+  padding: 40px 60px;
+  margin: 8px auto;
+}
+.personalDetails {
+  display: grid;
+  grid-template-columns: .4fr 1.5fr 2fr;
+  grid-gap: 16px 0;
+  gap: 16px 0;
+}
+.label-style {
+  font-family: DM Sans;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7e8e9f;
+}
+.mb-0, .my-0 {
+  margin-bottom: 0 !important;
+}
+.portfolioWarning {
+  color: #d10808;
+}
+.portfolioLink, .portfolioWarning {
+  margin-top: 10px;
+  font-style: italic;
+}
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.saveBtnCard {
+  width: 900px;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 24px auto;
+}
+.saveBtnGrid {
+  grid-column: 3 / 4;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  grid-gap: 12px;
+  gap: 12px;
+}
+.saveBtn:disabled {
+  background: #efefef;
+  border: 0;
+}
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn.disabled, .btn:disabled {
+  opacity: .65;
+}
+.saveBtn {
+  display: flex;
+  place-items: center;
+  padding: 16px 24px;
+  min-width: 79px;
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  align-self: center;
+  margin: 0;
+  background-color: #4b0dba;
+  color: #fff;
+  font-size: .875rem;
+}
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn {
+  color: #fff !important;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  user-select: none;
+  background-color: initial;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+[type=button], [type=reset], [type=submit], button {
+  -webkit-appearance: button;
+}
+Button {
+  margin-top: 20px;
+}
+button, select {
+  text-transform: none;
+}
+button, input {
+  overflow: visible;
+}
+button, input, optgroup, select, textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+button {
+  border-radius: 0;
+}
+button.saveBtn.btn.btn-primary {
+  background-color: aliceblue;
+}

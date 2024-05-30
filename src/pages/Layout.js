@@ -38,6 +38,10 @@ const Layout = (props) => {
     navigate("/login")
     
   }
+  const handlee =()=>{
+    setClick(true);
+    tests()
+  }
   return (
     
      <div><nav class="header__cont flex-y">
@@ -92,7 +96,7 @@ const Layout = (props) => {
                     to="/student/profile"
                     role="menuitem"
                     // className="ml-4"
-                    onClick={() => setClick(true)}
+                    onClick={handlee}
                   >
                      Profile
                   </Link>
