@@ -334,7 +334,7 @@ const Class = () => {
     }
     setClick(true);
     axios
-      .get(`http://localhost:8800/api/class/${ids[index - 1]}`)
+      .get(`https://zendesk-clone-backend.onrender.com/api/class/${ids[index - 1]}`)
       .then((response) => {
         //   console.log(response.data);
         setData(response.data); // This should log the data from the Capstone collection
@@ -348,7 +348,7 @@ const Class = () => {
     setClick(true);
     const cal = index + 42;
     axios
-      .get(`http://localhost:8800/api/class/${ids[cal]}`)
+      .get(`https://zendesk-clone-backend.onrender.com/api/class/${ids[cal]}`)
       .then((response) => {
         //   console.log(response.data);
         setData(response.data); // This should log the data from the Capstone collection

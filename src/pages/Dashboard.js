@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/webcode")
+      .get("https://zendesk-clone-backend.onrender.com/api/webcode")
       .then((response) => {
         console.log(response.data);
         setCount(response.data); // This should log the data from the Capstone collection
@@ -25,7 +25,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/capstone")
+      .get("https://zendesk-clone-backend.onrender.com/api/capstone")
       .then((response) => {
         console.log(response.data);
         setData(response.data); // This should log the data from the Capstone collection
@@ -36,7 +36,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/interview")
+      .get("https://zendesk-clone-backend.onrender.com/api/interview")
       .then((response) => {
         console.log(response.data);
         setMock(response.data); // This should log the data from the Capstone collection
@@ -47,7 +47,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/task/submission")
+      .get("https://zendesk-clone-backend.onrender.com/api/task/submission")
       .then((response) => {
         console.log(response.data);
         setCountT(response.data); // This should log the data from the Capstone collection

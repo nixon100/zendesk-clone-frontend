@@ -23,7 +23,7 @@ const LoginPage = (props) => {
       const handleClick = async (values) => {
         // e.preventDefault();
         try {
-          const res = await axios.post("http://localhost:8800/api/auth/login", values);
+          const res = await axios.post("https://zendesk-clone-backend.onrender.com/api/auth/login", values);
           console.log(res.data)
           navigate("/")
           props.setNavSide(false)

@@ -10,7 +10,7 @@ const SplitTask = (props) => {
   console.log(activeKey);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/class/submission")
+      .get("https://zendesk-clone-backend.onrender.com/api/class/submission")
       .then((response) => {
         //   console.log(response.data);
         setData(response.data);

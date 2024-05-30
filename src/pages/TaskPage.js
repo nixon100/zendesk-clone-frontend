@@ -9,7 +9,7 @@ const TaskPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/class/submission")
+      .get("https://zendesk-clone-backend.onrender.com/api/class/submission")
       .then((response) => {
         //   console.log(response.data);
         setData(response.data); // This should log the data from the Capstone collection

@@ -5,7 +5,7 @@ const Profile = () => {
     const [user,setUser] = useState([]);
     useEffect(() => {
         axios
-          .get("http://localhost:8800/api/users/66545c1d16e399c5fd3c4fbc")
+          .get("https://zendesk-clone-backend.onrender.com/api/users/66545c1d16e399c5fd3c4fbc")
           .then((response) => {
             console.log(response.data);
             setUser(response.data); // This should log the data from the Capstone collection

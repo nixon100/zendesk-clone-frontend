@@ -16,7 +16,7 @@ const Webcode = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8800/api/webcode")
+      .get("https://zendesk-clone-backend.onrender.com/api/webcode")
       .then((response) => {
         console.log(response.data);
         setData(response.data); // This should log the data from the Capstone collection
@@ -26,7 +26,7 @@ const Webcode = () => {
       });
     setLoading(false);
     axios
-      .get("http://localhost:8800/api/webcode/submission")
+      .get("https://zendesk-clone-backend.onrender.com/api/webcode/submission")
       .then((response) => {
         console.log(response.data);
         setSubdata(response.data); // This should log the data from the Capstone collection

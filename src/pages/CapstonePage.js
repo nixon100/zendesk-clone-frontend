@@ -16,7 +16,7 @@ const CapstonePage = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8800/api/capstone")
+      .get("https://zendesk-clone-backend.onrender.com/api/capstone")
       .then((response) => {
         console.log(response.data);
         setData(response.data); // This should log the data from the Capstone collection
@@ -30,7 +30,7 @@ const CapstonePage = () => {
 
   useEffect(()=>{
     axios
-    .get("http://localhost:8800/api/capstone/submission")
+    .get("https://zendesk-clone-backend.onrender.com/api/capstone/submission")
     .then((response) => {
       console.log(response.data);
       setSubdata(response.data); // This should log the data from the Capstone collection

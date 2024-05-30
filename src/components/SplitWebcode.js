@@ -27,7 +27,7 @@ const SplitWebcode = (props) => {
     console.log(formData);
     try {
       const response = await axios.post(
-        "http://localhost:8800/api/webcode/submission",
+        "https://zendesk-clone-backend.onrender.com/api/webcode/submission",
         formData
       );
       console.log(response.data);
