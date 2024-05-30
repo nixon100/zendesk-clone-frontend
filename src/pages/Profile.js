@@ -1,20 +1,25 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Profile = () => {
-    const [user,setUser] = useState([]);
-    useEffect(() => {
-        axios
-          .get("https://zendesk-clone-backend.onrender.com/api/users/66545c1d16e399c5fd3c4fbc")
-          .then((response) => {
-            console.log(response.data);
-            setUser(response.data); // This should log the data from the Capstone collection
-          })
-          .catch((error) => {
-            console.error(error); // This will log any errors that occur
-          });
-      }, []);
-      console.log(user)
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        "https://zendesk-clone-backend.onrender.com/api/users/66545c1d16e399c5fd3c4fbc"
+      )
+      .then((response) => {
+        console.log(response.data);
+        setUser(response.data); // This should log the data from the Capstone collection
+      })
+      .catch((error) => {
+        console.error(error); // This will log any errors that occur
+      });
+  }, []);
+  console.log(user);
+  const handle4 = (e) => {
+    e.preventDefault();
+  };
   return (
     // <div>Profile</div>
     <div class="Body_body__box__Y49P-">
@@ -188,6 +193,7 @@ const Profile = () => {
                   class="saveBtn btn btn-primary"
                   disabled=""
                   type="submit"
+                  onClick={handle4}
                 >
                   Save
                 </button>
