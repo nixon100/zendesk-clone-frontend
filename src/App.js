@@ -19,6 +19,9 @@ import Layout from "./pages/Layout.js";
 import Nopage from "./pages/Nopage.js";
 import Profile from "./pages/Profile.js";
 import LoginPage from "./pages/LoginPage.js";
+import Registration from "./pages/Registration.js";
+import ForgetPassword from "./pages/Forget-password.js"
+import NewPassword from "./pages/NewPassword.js";
 
 function App() {
 
@@ -43,6 +46,10 @@ function App() {
 
     </Route>
     <Route path='login' element={<LoginPage/>}/>
+    <Route path='registration' element={<Registration/>}/>
+    <Route path='forgot-password' element={<ForgetPassword/>}/>
+    <Route path='new-password' element={<NewPassword/>}/>
+
 
   </Routes>
   </BrowserRouter>

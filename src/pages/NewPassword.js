@@ -2,101 +2,76 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../css/Login.css";
+import "../css/Login.css"
 import { setNestedObjectValues, useFormik } from "formik";
 
-const LoginPage = (props) => {
-  const [credentials, setCredentials] = useState({
-    username: undefined,
-    password: undefined,
-  });
-  const [clickF, setClickF] = useState(false);
-  const [clickN, setClickN] = useState(false);
-  const [id,setId] = useState("");
-  const [error3, setError3] = useState("");
-  console.log(id);
-  //   const { loading, error, dispatch } = useContext(AuthContext);
 
-  const navigate = useNavigate();
-  function navig (){
-navigate("/forgot-password")
-  }
-
-  const handleChange = (e) => {
-    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-  };
-
-  const handleClick = async (values) => {
-    // e.preventDefault();
-    if (clickF) {
-     
-      // try {
-      //   const res = await axios.put(
-      //     `http://localhost:8800/api/auth/${id}`,
+const NewPassword = (props) => {
+    const [credentials, setCredentials] = useState({
+        username: undefined,
+        password: undefined,
+      });
+      const [id,setId] = useState("");
+      const [error3,setError3]= useState("");
+    console.log(credentials)
+    //   const { loading, error, dispatch } = useContext(AuthContext);
+    
+      const navigate = useNavigate()
+    
+      const handleChange = (e) => {
+        setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+      };
+    
+      const handleClick = async (values) => {
+        // e.preventDefault();
+        try {
+          const res = await axios.post("https://zendesk-clone-backend.onrender.com/api/auth/login", values);
+          console.log(res.data)
+          setId(res.data.details._id);
+          navigate("/new-password")
           
-      //     values
-      //   );
-      //   // setId(res.data.details._id);
-      //   // console.log(res.data.details._id)
-      //   {
-      //     clickF ? setClickN(true) : navigate("/");
-      //   }
-  
        
-      // } catch (err) {
-      //   console.error(err);
-      //   console.log("Wrong password or username!");
-      //   setError3("Wrong password or username!");
-      // }
-    }else{    
-      try {
-      const res = await axios.post(
-        "https://zendesk-clone-backend.onrender.com/api/auth/login",
-        values
-      );
-      setId(res.data.details._id);
+
+        } catch (err) {
+        console.error(err);
+        console.log("Wrong password or username!")
+        setError3("Wrong password or username!")
+        }
+      };
+    
+      const validate = values => {
+        const errors = {};
+        if (!values.username) {
+          errors.username = 'Required';
+        } else if (values.username.length > 30) {
+          errors.username = 'Must be 15 characters or less';
+        }
       
-      {
-        clickF ? setClickN(true) : navigate("/");
-      }
-
+        if (!values.password) {
+          errors.password = 'Required';
+        } else if (values.password.length > 10) {
+          errors.password = 'Must be 20 characters or less';
+        }
+      
      
-    } catch (err) {
-      console.error(err);
-      console.log("Wrong password or username!");
-      setError3("Wrong password or username!");
-    }}
-  };
+      
+        return errors;
+      };
 
-  const validate = (values) => {
-    const errors = {};
-    if (!values.username) {
-      errors.username = "Required";
-    } else if (values.username.length > 30) {
-      errors.username = "Must be 15 characters or less";
-    }
+      const formik = useFormik({
+        initialValues: {
+          username: '',
+          password: '',
+         
+        },
+        validate,
+        onSubmit: values => {
 
-    if (!values.password) {
-      errors.password = "Required";
-    } else if (values.password.length > 10) {
-      errors.password = "Must be 20 characters or less";
-    }
-
-    return errors;
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    validate,
-    onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
-      handleClick(values);
-    },
-  });
-
+          // alert(JSON.stringify(values, null, 2));
+          handleClick(values)
+        },
+      });
+    
   return (
     <div>
       <div class="container-custom mr-0 pr-0">
@@ -114,71 +89,55 @@ navigate("/forgot-password")
                   <form onSubmit={formik.handleSubmit}>
                     <div class="form-group mt-2">
                       <label for="email" class="label-style mb-0">
-                         {clickN ? "Enter new password" : "Email"}
+                        Email
                       </label>
                       <div>
                         <input
                           class="form-control"
-                          name="username"
-                          id="username"
-                          placeholder={
-                            clickF
-                              ? "Enter username"
-                              : "Example : johndoe@mail.com"
-                          }
+                         name="username"
+                        id="username"
+                          placeholder="Example : johndoe@mail.com"
                           type="username"
-                          //   value=""
-                          onChange={formik.handleChange}
-                          value={formik.values.username}
+                        //   value=""
+                        onChange={formik.handleChange}
+                        value={formik.values.username}
                         />
                       </div>
-                      {formik.errors.username ? (
-                        <div className="error1">{formik.errors.username}</div>
-                      ) : null}
+                      {formik.errors.username ? <div className="error1">{formik.errors.username}</div> : null}
                     </div>
                     <div class="form-group mt-1">
                       <label for="password" class="label-style mb-0">
-                        {clickF ? "Enter your older password" : clickN ? "Conform Password" : "Password"}
+                        Older Password
                       </label>
                       <div>
                         <input
                           class="form-control"
-                          name="password"
-                          id="password"
-                          placeholder={
-                            clickF
-                              ? "Enter your older password"
-                              : "Enter password"
-                          }
+                         name="password"
+                        id="password"
+                          placeholder="Your older password"
                           type="password"
-                          //   value=""
-                          onChange={formik.handleChange}
-                          value={formik.values.password}
+                        //   value=""
+                        onChange={formik.handleChange}
+         value={formik.values.password}
                         />
                       </div>
-                      {formik.errors.password ? (
-                        <div className="error1">{formik.errors.password}</div>
-                      ) : null}
+                      {formik.errors.password ? <div className="error1">{formik.errors.password}</div> : null}
                     </div>
                     <button
                       type="submit"
                       class="col-md-12 btn btn-lg btn-block login-btn mt-4 mb-4"
+                      
                     >
-                      Login
+                      Submit
                     </button>
-                    {error3 != "" ? (
-                      <div className="error1">{error3}</div>
-                    ) : null}
+                    {(error3 != "") ?<div className="error1">{error3}</div> : null}
+
                   </form>
                 </div>
                 <div class="text">
-                  <h3>
-                    Don't have an account? <a href="/registration">Signup</a>
-                  </h3>
-                </div>
-                <div class="row forgot" onClick={navig}>
-                  Forgot Password?
-                </div>
+        <a href="/login">Signin</a>
+      </div>
+              
               </div>
             </div>
           </div>
@@ -195,4 +154,4 @@ navigate("/forgot-password")
   );
 };
 
-export default LoginPage;
+export default NewPassword;

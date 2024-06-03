@@ -5,22 +5,17 @@ import axios from "axios";
 import "../css/Login.css";
 import { setNestedObjectValues, useFormik } from "formik";
 
-const LoginPage = (props) => {
+const ForgetPassword = (props) => {
   const [credentials, setCredentials] = useState({
     username: undefined,
     password: undefined,
   });
-  const [clickF, setClickF] = useState(false);
-  const [clickN, setClickN] = useState(false);
-  const [id,setId] = useState("");
+  const [id, setId] = useState("");
   const [error3, setError3] = useState("");
-  console.log(id);
+  console.log(credentials);
   //   const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  function navig (){
-navigate("/forgot-password")
-  }
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -28,44 +23,19 @@ navigate("/forgot-password")
 
   const handleClick = async (values) => {
     // e.preventDefault();
-    if (clickF) {
-     
-      // try {
-      //   const res = await axios.put(
-      //     `http://localhost:8800/api/auth/${id}`,
-          
-      //     values
-      //   );
-      //   // setId(res.data.details._id);
-      //   // console.log(res.data.details._id)
-      //   {
-      //     clickF ? setClickN(true) : navigate("/");
-      //   }
-  
-       
-      // } catch (err) {
-      //   console.error(err);
-      //   console.log("Wrong password or username!");
-      //   setError3("Wrong password or username!");
-      // }
-    }else{    
-      try {
+    try {
       const res = await axios.post(
         "https://zendesk-clone-backend.onrender.com/api/auth/login",
         values
       );
+      console.log(res.data);
       setId(res.data.details._id);
-      
-      {
-        clickF ? setClickN(true) : navigate("/");
-      }
-
-     
+      navigate("/new-password");
     } catch (err) {
       console.error(err);
       console.log("Wrong password or username!");
       setError3("Wrong password or username!");
-    }}
+    }
   };
 
   const validate = (values) => {
@@ -114,18 +84,14 @@ navigate("/forgot-password")
                   <form onSubmit={formik.handleSubmit}>
                     <div class="form-group mt-2">
                       <label for="email" class="label-style mb-0">
-                         {clickN ? "Enter new password" : "Email"}
+                        Email
                       </label>
                       <div>
                         <input
                           class="form-control"
                           name="username"
                           id="username"
-                          placeholder={
-                            clickF
-                              ? "Enter username"
-                              : "Example : johndoe@mail.com"
-                          }
+                          placeholder="Example : johndoe@mail.com"
                           type="username"
                           //   value=""
                           onChange={formik.handleChange}
@@ -138,18 +104,14 @@ navigate("/forgot-password")
                     </div>
                     <div class="form-group mt-1">
                       <label for="password" class="label-style mb-0">
-                        {clickF ? "Enter your older password" : clickN ? "Conform Password" : "Password"}
+                        Older Password
                       </label>
                       <div>
                         <input
                           class="form-control"
                           name="password"
                           id="password"
-                          placeholder={
-                            clickF
-                              ? "Enter your older password"
-                              : "Enter password"
-                          }
+                          placeholder="Your older password"
                           type="password"
                           //   value=""
                           onChange={formik.handleChange}
@@ -164,7 +126,7 @@ navigate("/forgot-password")
                       type="submit"
                       class="col-md-12 btn btn-lg btn-block login-btn mt-4 mb-4"
                     >
-                      Login
+                      Submit
                     </button>
                     {error3 != "" ? (
                       <div className="error1">{error3}</div>
@@ -172,12 +134,7 @@ navigate("/forgot-password")
                   </form>
                 </div>
                 <div class="text">
-                  <h3>
-                    Don't have an account? <a href="/registration">Signup</a>
-                  </h3>
-                </div>
-                <div class="row forgot" onClick={navig}>
-                  Forgot Password?
+                  <a href="/login">Signin</a>
                 </div>
               </div>
             </div>
@@ -195,4 +152,4 @@ navigate("/forgot-password")
   );
 };
 
-export default LoginPage;
+export default ForgetPassword;

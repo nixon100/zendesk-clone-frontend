@@ -663,7 +663,7 @@ const TaskPart = (props) => {
               </div>
               <div class="d-flex justify-content-end">
                 <button
-                  class="btn submit-btn mb-3"
+                  class="but"
                   type="submit"
                   disabled=""
                  

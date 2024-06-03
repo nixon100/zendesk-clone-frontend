@@ -43,11 +43,7 @@
 .baseContainer {
     margin: 8px auto;
 }
-.flexCont {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
+
 .weight-500 {
     font-weight: 500;
 }
