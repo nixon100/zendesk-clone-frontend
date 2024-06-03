@@ -13,7 +13,7 @@ const NewPassword = (props) => {
       });
       const [id,setId] = useState("");
       const [error3,setError3]= useState("");
-    console.log(credentials)
+    // console.log(credentials)
     //   const { loading, error, dispatch } = useContext(AuthContext);
     
       const navigate = useNavigate()
@@ -24,8 +24,9 @@ const NewPassword = (props) => {
     
       const handleClick = async (values) => {
         // e.preventDefault();
+        console.log(values)
         try {
-          const res = await axios.post("https://zendesk-clone-backend.onrender.com/api/auth/login", values);
+          const res = await axios.post("https://localhost:8800/api/auth/", values);
           console.log(res.data)
           setId(res.data.details._id);
           navigate("/new-password")
@@ -89,7 +90,7 @@ const NewPassword = (props) => {
                   <form onSubmit={formik.handleSubmit}>
                     <div class="form-group mt-2">
                       <label for="email" class="label-style mb-0">
-                        Email
+                        New password
                       </label>
                       <div>
                         <input
@@ -107,7 +108,7 @@ const NewPassword = (props) => {
                     </div>
                     <div class="form-group mt-1">
                       <label for="password" class="label-style mb-0">
-                        Older Password
+                        Conform password
                       </label>
                       <div>
                         <input

@@ -12,14 +12,14 @@ const LoginPage = (props) => {
   });
   const [clickF, setClickF] = useState(false);
   const [clickN, setClickN] = useState(false);
-  const [id,setId] = useState("");
+  const [id, setId] = useState("");
   const [error3, setError3] = useState("");
   console.log(id);
   //   const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  function navig (){
-navigate("/forgot-password")
+  function navig() {
+    navigate("/forgot-password");
   }
 
   const handleChange = (e) => {
@@ -27,45 +27,43 @@ navigate("/forgot-password")
   };
 
   const handleClick = async (values) => {
-    // e.preventDefault();
-    if (clickF) {
-     
-      // try {
-      //   const res = await axios.put(
-      //     `http://localhost:8800/api/auth/${id}`,
-          
-      //     values
-      //   );
-      //   // setId(res.data.details._id);
-      //   // console.log(res.data.details._id)
-      //   {
-      //     clickF ? setClickN(true) : navigate("/");
-      //   }
-  
-       
-      // } catch (err) {
-      //   console.error(err);
-      //   console.log("Wrong password or username!");
-      //   setError3("Wrong password or username!");
-      // }
-    }else{    
-      try {
-      const res = await axios.post(
-        "https://zendesk-clone-backend.onrender.com/api/auth/login",
-        values
-      );
-      setId(res.data.details._id);
-      
-      {
-        clickF ? setClickN(true) : navigate("/");
-      }
+    //   try {
+    //   const res = await axios.post(
+    //     "https://zendesk-clone-backend.onrender.com/api/auth/login",
+    //     values
+    //   )
+    //   setId(res.data.details._id);
 
-     
-    } catch (err) {
-      console.error(err);
+    //   {
+    //     clickF ? setClickN(true) : navigate("/");
+    //   }
+    // } catch (err) {
+    //   console.error(err);
+    //   console.log("Wrong password or username!");
+    //   setError3("Wrong password or username!");
+    // }
+
+    axios
+    .post("http://localhost:8800/api/auth/login", values)
+    .then((response) => {
+      console.log(response.data);
+      // You can access the token in the `response.data` object
+      const token = response.data.token;
+      console.log(token);
+      // You can use the token to make authenticated requests
+      setId(response.data.details._id);
+      if (clickF) {
+        setClickN(true);
+      } else {
+        navigate("/");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
       console.log("Wrong password or username!");
       setError3("Wrong password or username!");
-    }}
+    });
+    formik.resetForm();
   };
 
   const validate = (values) => {
@@ -114,7 +112,7 @@ navigate("/forgot-password")
                   <form onSubmit={formik.handleSubmit}>
                     <div class="form-group mt-2">
                       <label for="email" class="label-style mb-0">
-                         {clickN ? "Enter new password" : "Email"}
+                        {clickN ? "Enter new password" : "Email"}
                       </label>
                       <div>
                         <input
@@ -138,7 +136,11 @@ navigate("/forgot-password")
                     </div>
                     <div class="form-group mt-1">
                       <label for="password" class="label-style mb-0">
-                        {clickF ? "Enter your older password" : clickN ? "Conform Password" : "Password"}
+                        {clickF
+                          ? "Enter your older password"
+                          : clickN
+                          ? "Conform Password"
+                          : "Password"}
                       </label>
                       <div>
                         <input

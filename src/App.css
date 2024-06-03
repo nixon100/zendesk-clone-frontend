@@ -1423,3 +1423,8 @@ button.but{
   align-items: center;
   justify-content: center;
 }
+.err1 {
+  padding: 0px;
+  color: red;
+  height: auto;
+}

@@ -12,16 +12,51 @@ const ForgetPassword = (props) => {
   });
   const [id, setId] = useState("");
   const [error3, setError3] = useState("");
-  console.log(credentials);
+  const [error4, setError4] = useState("");
+  const [clickN, setClickN] = useState(false);
+  const [clickL,setClickL] = useState(false)
+  const [user, setUser] = useState("");
+  const [pass,setPass] = useState("");
+    
+ 
   //   const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
-
+const handle =()=>{
+  setClickL(false)
+  setClickN(false)
+}
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
   const handleClick = async (values) => {
+    console.log(values.username, values.password)
+    if (clickN) {
+      if (values.username ==values.password ) {
+        
+      
+      console.log(values.username, values.password)
+      console.log(values,id)
+      try {
+        const res = await axios.put(`http://localhost:8800/api/auth/${id}`,
+          values
+        );
+        console.log(res.data);
+        console.log(`https://localhost:8800/api/auth/${id}`)
+        setClickL(true)
+        // setClickN(true)
+        // navigate("/new-password");
+      } catch (err) {
+        console.error(err);
+        console.log("Wrong password or username!");
+        setError3("Wrong password or username!");
+      }
+      formik.resetForm();
+    }else{
+      console.log("not equal")
+      setError4("Password not equal")
+    }}else {
     // e.preventDefault();
     try {
       const res = await axios.post(
@@ -30,13 +65,15 @@ const ForgetPassword = (props) => {
       );
       console.log(res.data);
       setId(res.data.details._id);
-      navigate("/new-password");
+      setClickN(true)
+      // navigate("/new-password");
     } catch (err) {
       console.error(err);
       console.log("Wrong password or username!");
       setError3("Wrong password or username!");
     }
-  };
+    formik.resetForm();
+  }}
 
   const validate = (values) => {
     const errors = {};
@@ -58,7 +95,7 @@ const ForgetPassword = (props) => {
   const formik = useFormik({
     initialValues: {
       username: "",
-      password: "",
+      password: ""
     },
     validate,
     onSubmit: (values) => {
@@ -78,23 +115,84 @@ const ForgetPassword = (props) => {
                 alt=""
               />
             </div>
-            <div class="row">
+            {clickN ?(
+               <div class="row">
+             {clickL ? <div><h3>Password updated</h3> <a href="/login" onClick={handle}>Signin</a></div>:( <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+                <div class="col-md-6">
+                  <form onSubmit={formik.handleSubmit}>
+                    <div class="form-group mt-2">
+                      <label for="email" class="label-style mb-0">
+                        New password
+                      </label>
+                      <div>
+                        <input
+                          class="form-control"
+                         name="username"
+                        id="username"
+                          placeholder="Enter new password"
+                          type="username"
+                        //   value=""
+                        onChange={formik.handleChange}
+                       // onChange={(e)=>setUser(e.target.value)}
+                        value={formik.values.username}
+                        />
+                      </div>
+                      {formik.errors.username ? <div className="error1">{formik.errors.username}</div> : null}
+                    </div>
+                    <div class="form-group mt-1">
+                      <label for="password" class="label-style mb-0">
+                        Conform password
+                      </label>
+                      <div>
+                        <input
+                          class="form-control"
+                         name="password"
+                        id="password"
+                          placeholder="Enter Conform Password"
+                          type="password"
+                        //   value=""
+                        onChange={formik.handleChange}
+                       // onChange={(e)=>setPass(e.target.value)}
+         value={formik.values.password}
+                        />
+                      </div>
+                      {formik.errors.password ? <div className="error1">{formik.errors.password}</div> : null}
+                      {error4 == "" ? null : <div className="error1">{error4}</div>}
+                    </div>
+                    <button
+                      type="submit"
+                      class="col-md-12 btn btn-lg btn-block login-btn mt-4 mb-4"
+                      
+                    >
+                      Submit
+                    </button>
+                    {(error3 != "") ?<div className="error1">{error3}</div> : null}
+
+                  </form>
+                </div>
+                <div class="text">
+        <a href="/login">Signin</a>
+      </div>
+              
+              </div>)}
+            </div>): (<div class="row">
               <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
                 <div class="col-md-6">
                   <form onSubmit={formik.handleSubmit}>
                     <div class="form-group mt-2">
                       <label for="email" class="label-style mb-0">
-                        Email
+                        Username
                       </label>
                       <div>
                         <input
                           class="form-control"
                           name="username"
                           id="username"
-                          placeholder="Example : johndoe@mail.com"
+                          placeholder="Enter username"
                           type="username"
                           //   value=""
                           onChange={formik.handleChange}
+                         // onChange={(e)=>setUser(e.target.value)}
                           value={formik.values.username}
                         />
                       </div>
@@ -115,6 +213,7 @@ const ForgetPassword = (props) => {
                           type="password"
                           //   value=""
                           onChange={formik.handleChange}
+                         // onChange={(e)=>setPass(e.target.value)}
                           value={formik.values.password}
                         />
                       </div>
@@ -137,7 +236,7 @@ const ForgetPassword = (props) => {
                   <a href="/login">Signin</a>
                 </div>
               </div>
-            </div>
+            </div>)}
           </div>
           <div class="col-md-4 text-right pr-0">
             <img
