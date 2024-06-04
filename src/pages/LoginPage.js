@@ -14,7 +14,7 @@ const LoginPage = (props) => {
   const [clickN, setClickN] = useState(false);
   const [id, setId] = useState("");
   const [error3, setError3] = useState("");
-  console.log(id);
+  
   //   const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const LoginPage = (props) => {
       const token = response.data.token;
       console.log(token);
       // You can use the token to make authenticated requests
-      setId(response.data.details._id);
+      setId(response.data._id);
       if (clickF) {
         setClickN(true);
       } else {
@@ -71,13 +71,13 @@ const LoginPage = (props) => {
     if (!values.username) {
       errors.username = "Required";
     } else if (values.username.length > 30) {
-      errors.username = "Must be 15 characters or less";
+      errors.username = "Must be 30 characters or less";
     }
 
     if (!values.password) {
       errors.password = "Required";
     } else if (values.password.length > 10) {
-      errors.password = "Must be 20 characters or less";
+      errors.password = "Must be 10 characters or less";
     }
 
     return errors;

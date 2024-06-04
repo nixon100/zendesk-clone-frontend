@@ -15,16 +15,17 @@ const Registration = (e) => {
   const [batch, setBatch] = useState("");
   const [error, setError] = useState("");
   const [gender, setGender] = useState("");
-  console.log(username);
-  console.log(password);
-  console.log(email);
-  console.log(country);
-  console.log(city);
-  console.log(phone);
-  console.log(batch);
-  console.log(gender);
+  // console.log(username);
+  // console.log(password);
+  // console.log(email);
+  // console.log(country);
+  // console.log(city);
+  // console.log(phone);
+  // console.log(batch);
+  // console.log(gender);
 
   const handleClick = async (values) => {
+  
     // e.preventDefault();
     // const form = {
     //     "username": username,
@@ -40,14 +41,15 @@ const Registration = (e) => {
     // console.log(form)
     try {
       const res = await axios.post(
-        "https://zendesk-clone-backend.onrender.com/api/auth/register",
+        "http://localhost:8800/api/auth/register",
         values
       );
       console.log(res.data);
       navigate("/login");
     } catch (err) {
       console.error(err);
-      console.log("Wrong password or username!");
+      console.log("Username already exist! go to LOGIN");
+      setError("Username already exist ! go to LOGIN")
     }
   };
 
@@ -67,7 +69,7 @@ const Registration = (e) => {
 
     if (!values.email) {
       errors.email = "Required";
-    } else if (values.email.length > 10) {
+    } else if (values.email.length > 30) {
       errors.email = "Must be 10 characters or less";
     }
 
@@ -100,6 +102,13 @@ const Registration = (e) => {
     } else if (values.gender.length > 15) {
       errors.gender = "Must be 15 characters or less";
     }
+    if (!values.confirmpassword) {
+      errors.confirmpassword = "Required";
+    } else if (values.confirmpassword.length > 10) {
+      errors.confirmpassword = "Must be 15 characters or less";
+    } else if (values.confirmpassword !== values.password) {
+      errors.confirmpassword = "Password not equal";
+    }
 
     return errors;
   };
@@ -114,6 +123,7 @@ const Registration = (e) => {
       phone: "",
       batch: "",
       gender: "",
+      confirmpassword : ""
     },
     validate,
     onSubmit: (values) => {
@@ -127,7 +137,7 @@ const Registration = (e) => {
       <div class="container">
         <div class="title">Registration</div>
         <div class="content">
-          <form action="#" onSubmit={handleClick}>
+          <form onSubmit={formik.handleSubmit}>
             <div class="user-details">
               <div class="input-box">
                 <span class="details">Username</span>
@@ -249,11 +259,11 @@ const Registration = (e) => {
                   required
                   // onChange={(e) => setPassword(e.target.value)}
                   onChange={formik.handleChange}
-                  name="password"
-                  value={formik.values.password}
+                  name="confirmpassword"
+                  value={formik.values.confirmpassword}
                 />
-                  {formik.errors.password ? (
-                <div className="err1">{formik.errors.password}</div>
+                  {formik.errors.confirmpassword ? (
+                <div className="err1">{formik.errors.confirmpassword}</div>
               ) : null}
               </div>
             
@@ -263,25 +273,28 @@ const Registration = (e) => {
                 type="radio"
                 name="gender"
                 id="dot-1"
-                onClick={() => setGender("male")}
+                value="male"
+               // onClick={() => setGender("male")}
                 onChange={formik.handleChange}
-                value={formik.values.gender}
+               // value={formik.values.gender}
               />
               <input
                 type="radio"
                 name="gender"
                 id="dot-2"
-                onClick={() => setGender("female")}
+                value="female"
+               // onClick={() => setGender("female")}
                 onChange={formik.handleChange}
-                value={formik.values.gender}
+               // value={formik.values.gender}
               />
               <input
                 type="radio"
                 name="gender"
                 id="dot-3"
-                onClick={() => setGender("prefer not to say")}
+                value="prefer not to say"
+               // onClick={() => setGender("prefer not to say")}
                 onChange={formik.handleChange}
-                value={formik.values.gender}
+               // value={formik.values.gender}
               />
               <span class="gender-title">Gender</span>
               <div class="category">
@@ -306,6 +319,7 @@ const Registration = (e) => {
             <div class="button">
               <input type="submit" value="Register" />
             </div>
+            {error ? (<div className="err1"> {error}</div>):null}
             <a href="/login">Login now</a>
           </form>
         </div>

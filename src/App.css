@@ -1427,4 +1427,6 @@ button.but{
   padding: 0px;
   color: red;
   height: auto;
+  /* padding: 10px; */
+  margin-bottom: 10px;
 }

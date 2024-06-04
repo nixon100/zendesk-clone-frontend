@@ -49,6 +49,7 @@ function App() {
     <Route path='registration' element={<Registration/>}/>
     <Route path='forgot-password' element={<ForgetPassword/>}/>
     <Route path='new-password' element={<NewPassword/>}/>
+    <Route path='reset-password' element={<NewPassword/>}/>
 
 
   </Routes>
