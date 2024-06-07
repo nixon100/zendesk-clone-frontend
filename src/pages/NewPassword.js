@@ -52,7 +52,7 @@ const NewPassword = (props) => {
     console.log(id, token1);
     try {
       const res = await axios.post(
-        `http://localhost:8800/api/auth/reset-password/${id}/${token1}`,
+        `https://zendesk-clone-backend.onrender.com/api/auth/reset-password/${id}/${token1}`,
         values
       );
       console.log(res.data);

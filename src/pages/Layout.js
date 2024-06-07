@@ -44,7 +44,7 @@ const Layout = (props) => {
   };
   const handle3 =()=>{
     axios
-    .get("http://localhost:8800/api/auth/logout")
+    .get("https://zendesk-clone-backend.onrender.com/api/auth/logout")
     .then((response) => {
       console.log(response.data);
       navigate("/login")

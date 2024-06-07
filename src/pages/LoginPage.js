@@ -44,7 +44,7 @@ const LoginPage = (props) => {
     // }
 
     axios
-    .post("http://localhost:8800/api/auth/login", values)
+    .post("https://zendesk-clone-backend.onrender.com/api/auth/login", values)
     .then((response) => {
       console.log(response.data);
       localStorage.setItem('access_token', response.data.token);
