@@ -16,7 +16,6 @@ const LoginPage = (props) => {
   const [id, setId] = useState("");
   const [error3, setError3] = useState("");
   
-  //   const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
   function navig() {
@@ -48,11 +47,13 @@ const LoginPage = (props) => {
     .post("http://localhost:8800/api/auth/login", values)
     .then((response) => {
       console.log(response.data);
+      localStorage.setItem('access_token', response.data.token);
+
       // You can access the token in the `response.data` object
-      const token = response.data.token;
-      console.log(token);
-      // You can use the token to make authenticated requests
-      setId(response.data._id);
+      // const token = response.data.token;
+      // console.log(token);
+      // // You can use the token to make authenticated requests
+      // setId(response.data._id);
       if (clickF) {
         setClickN(true);
       } else {

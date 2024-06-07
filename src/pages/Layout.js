@@ -16,10 +16,18 @@ import MockInterview from "../components/MockInterview";
 import Class from "../pages/Class.js";
 import { Outlet, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 
 const Layout = (props) => {
   const [hed, setHed] = useState("Class");
   const [click, setClick] = useState(false);
+
+  useEffect(() => {
+    if(!localStorage.getItem('access_token')){
+      navigate("/login")
+     }
+  }, []);
   function tests() {
     const element = document.querySelector(".dropdownMenu.dropdown-menu.show");
     element.style.display = element.style.display === "none" ? "block" : "none";
@@ -35,7 +43,16 @@ const Layout = (props) => {
     setIsActive(false);
   };
   const handle3 =()=>{
-    navigate("/login")
+    axios
+    .get("http://localhost:8800/api/auth/logout")
+    .then((response) => {
+      console.log(response.data);
+      navigate("/login")
+    })
+    .catch((error) => {
+      console.error(error); // This will log any errors that occur
+    });
+    
     
   }
   const handlee =()=>{

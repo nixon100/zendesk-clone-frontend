@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TaskPart from "../components/classComponents/TaskPart";
 import { useState } from "react";
 import axios from "axios";
 import Modal from "../components/classComponents/Modal";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Class = () => {
   const [click, setClick] = useState(false);
@@ -18,6 +20,43 @@ const Class = () => {
   const [taskSub8, setTaskSub8] = useState(false);
   const [taskSub0, setTaskSub0] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [conf,setConfic] =useState(false);
+  const navigate = useNavigate()
+
+  // useEffect(() => {
+  //   // const apiUrl = "http://localhost:8800/checktoken";
+  //   // const token = "your_access_token_here"; // Replace with the actual token value
+
+  //   // axios.create({
+  //   //   baseURL: apiUrl,
+  //   //   headers: {
+  //   //     Authorization: `Bearer ${token}`,
+  //   //     Cookie: `${cookieName}=${cookieValue}`, // If you still need to send the cookie
+  //   //   },
+  //   // });
+
+  //   // axios
+  //   //   .get("/")
+  //   //   .then((response) => {
+  //   //     console.log(response.data);
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.error(error);
+  //   //   });
+  //    if(!localStorage.getItem('access_token')){
+  //     navigate("/login")
+  //    }
+
+  
+  // }, []);
+
+  useEffect(() => {
+  if(!localStorage.getItem('access_token')){
+    navigate("/login")
+   }
+
+
+}, []);
 
   const ids = [
     "6655bfa88a88ff8116e18a59",
@@ -218,7 +257,7 @@ const Class = () => {
   ];
 
   function handle1(index) {
-    setIsFormSubmitted(false)
+    setIsFormSubmitted(false);
 
     console.log(index);
 
@@ -239,7 +278,7 @@ const Class = () => {
       taskSub = 7;
     } else if ([41, 42].includes(index)) {
       taskSub = 8;
-    } 
+    }
 
     switch (taskSub) {
       case 1:
@@ -330,11 +369,12 @@ const Class = () => {
         setTaskSub1(false);
         setTaskSub0(false);
         break;
-   
     }
     setClick(true);
     axios
-      .get(`https://zendesk-clone-backend.onrender.com/api/class/${ids[index - 1]}`)
+      .get(
+        `http://localhost:8800/api/class/${ids[index - 1]}`
+      )
       .then((response) => {
         //   console.log(response.data);
         setData(response.data); // This should log the data from the Capstone collection
@@ -419,8 +459,10 @@ const Class = () => {
       )}
     </div>
   );
+
   return (
-    <div class="Body_body__box__Y49P-">
+    
+      <div class="Body_body__box__Y49P-">
       <div class="Body_body__wrapper__6cj6C">
         <div class="Body_body__content__full__1L5Pm">
           <div class="row-container">
@@ -458,9 +500,8 @@ const Class = () => {
               </div>
               {click ? (
                 <TaskPart
-                isFormSubmitted ={isFormSubmitted}
-                setIsFormSubmitted ={setIsFormSubmitted}
-
+                  isFormSubmitted={isFormSubmitted}
+                  setIsFormSubmitted={setIsFormSubmitted}
                   data={data}
                   taskSub1={taskSub1}
                   taskSub2={taskSub2}
