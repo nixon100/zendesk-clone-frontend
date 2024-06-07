@@ -50,13 +50,13 @@ const Class = () => {
   
   // }, []);
 
-  useEffect(() => {
-  if(!localStorage.getItem('access_token')){
-    navigate("/login")
-   }
+//   useEffect(() => {
+//   if(!localStorage.getItem('access_token')){
+//     navigate("/login")
+//    }
 
 
-}, []);
+// }, []);
 
   const ids = [
     "6655bfa88a88ff8116e18a59",

@@ -109,7 +109,7 @@ const NewPassword = (props) => {
                 alt=""
               />
             </div>
-            (
+            
               <div class="row">
                 <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
                   <div class="col-md-6">
@@ -170,7 +170,7 @@ const NewPassword = (props) => {
                   </div>
                 </div>
               </div>
-            )
+            
           </div>
           <div class="col-md-4 text-right pr-0">
             <img
