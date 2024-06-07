@@ -4,66 +4,45 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Login.css";
 import { setNestedObjectValues, useFormik } from "formik";
-import {useSignIn} from "react-auth-kit"
-
-const LoginPage = (props) => {
-  const [credentials, setCredentials] = useState({
-    email: undefined,
-    password: undefined,
-  });
-  const [clickF, setClickF] = useState(false);
-  const [clickN, setClickN] = useState(false);
+const Email = () => {
   const [id, setId] = useState("");
   const [error3, setError3] = useState("");
-  
+  const [error4, setError4] = useState("");
+  const [clickN, setClickN] = useState(false);
+  const [clickL, setClickL] = useState(false);
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
+  const [cm, setCm] = useState(false);
+console.log(cm)
   //   const { loading, error, dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  function navig() {
-    navigate("/forgot-password");
-  }
-
-  const handleChange = (e) => {
-    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  const handle = () => {
+    setClickL(false);
+    setClickN(false);
   };
+  // const handleChange = (e) => {
+  //   setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  // };
 
   const handleClick = async (values) => {
-    //   try {
-    //   const res = await axios.post(
-    //     "https://zendesk-clone-backend.onrender.com/api/auth/login",
-    //     values
-    //   )
-    //   setId(res.data.details._id);
-
-    //   {
-    //     clickF ? setClickN(true) : navigate("/");
-    //   }
-    // } catch (err) {
-    //   console.error(err);
-    //   console.log("Wrong password or username!");
-    //   setError3("Wrong password or username!");
-    // }
-
-    axios
-    .post("http://localhost:8800/api/auth/login", values)
-    .then((response) => {
-      console.log(response.data);
-      // You can access the token in the `response.data` object
-      const token = response.data.token;
-      console.log(token);
-      // You can use the token to make authenticated requests
-      setId(response.data._id);
-      if (clickF) {
-        setClickN(true);
-      } else {
-        navigate("/");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      console.log("Wrong password or email!");
-      setError3("Wrong password or email!");
-    });
+    setCm(true)
+    // e.preventDefault();
+    try {
+      const res = await axios.post(
+        "http://localhost:8800/api/auth/reset-password",
+        values
+      );
+      console.log(res.data);
+      setId(res.data._id);
+      
+      setClickN(true);
+      // navigate("/new-password");
+    } catch (err) {
+      console.error(err);
+      console.log("Wrong password or username!");
+      setError3("Your register email is wrong!");
+    }
     formik.resetForm();
   };
 
@@ -75,19 +54,12 @@ const LoginPage = (props) => {
       errors.email = "Must be 30 characters or less";
     }
 
-    if (!values.password) {
-      errors.password = "Required";
-    } else if (values.password.length > 10) {
-      errors.password = "Must be 10 characters or less";
-    }
-
     return errors;
   };
 
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
     },
     validate,
     onSubmit: (values) => {
@@ -107,83 +79,60 @@ const LoginPage = (props) => {
                 alt=""
               />
             </div>
-            <div class="row">
-              <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-                <div class="col-md-6">
-                  <form onSubmit={formik.handleSubmit}>
-                    <div class="form-group mt-2">
-                      <label for="email" class="label-style mb-0">
-                        {clickN ? "Enter new password" : "Email"}
-                      </label>
-                      <div>
-                        <input
-                          class="form-control"
-                          name="email"
-                          id="email"
-                          placeholder={
-                            clickF
-                              ? "Enter email"
-                              : "Example : johndoe@mail.com"
-                          }
-                          type="email"
-                          //   value=""
-                          onChange={formik.handleChange}
-                          value={formik.values.email}
-                        />
-                      </div>
-                      {formik.errors.email ? (
-                        <div className="error1">{formik.errors.email}</div>
-                      ) : null}
-                    </div>
-                    <div class="form-group mt-1">
-                      <label for="password" class="label-style mb-0">
-                        {clickF
-                          ? "Enter your older password"
-                          : clickN
-                          ? "Conform Password"
-                          : "Password"}
-                      </label>
-                      <div>
-                        <input
-                          class="form-control"
-                          name="password"
-                          id="password"
-                          placeholder={
-                            clickF
-                              ? "Enter your older password"
-                              : "Enter password"
-                          }
-                          type="password"
-                          //   value=""
-                          onChange={formik.handleChange}
-                          value={formik.values.password}
-                        />
-                      </div>
-                      {formik.errors.password ? (
-                        <div className="error1">{formik.errors.password}</div>
-                      ) : null}
-                    </div>
-                    <button
-                      type="submit"
-                      class="col-md-12 btn btn-lg btn-block login-btn mt-4 mb-4"
-                    >
-                      Login
-                    </button>
-                    {error3 != "" ? (
-                      <div className="error1">{error3}</div>
-                    ) : null}
-                  </form>
-                </div>
-                <div class="text">
-                  <h3>
-                    Don't have an account? <a href="/registration">Signup</a>
-                  </h3>
-                </div>
-                <div class="row forgot" onClick={navig}>
-                  Forgot Password?
+
+            {cm ? (
+              <div class="row">
+                <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+                  <div>
+                    <h5>Kindly Check your Email for Password Updation</h5>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div class="row">
+                <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+                  <div class="col-md-6">
+                    <form onSubmit={formik.handleSubmit}>
+                      <div class="form-group mt-2">
+                        <label for="email" class="label-style mb-0">
+                          Enter Registered Email
+                        </label>
+                        <div>
+                          <input
+                            class="form-control"
+                            name="email"
+                            id="email"
+                            placeholder="Eg: john@abc.com"
+                            type="email"
+                            //   value=""
+                            onChange={formik.handleChange}
+                            // onChange={(e)=>setUser(e.target.value)}
+                            value={formik.values.email}
+                          />
+                        </div>
+                        {formik.errors.email ? (
+                          <div className="error1">{formik.errors.email}</div>
+                        ) : null}
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="col-md-12 btn btn-lg btn-block login-btn mt-4 mb-4"
+                      
+                      >
+                        Submit
+                      </button>
+                      {error3 != "" ? (
+                        <div className="error1">{error3}</div>
+                      ) : null}
+                    </form>
+                  </div>
+                  <div class="text">
+                    <a href="/login">Signin</a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <div class="col-md-4 text-right pr-0">
             <img
@@ -198,4 +147,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default LoginPage;
+export default Email;

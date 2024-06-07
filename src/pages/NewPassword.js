@@ -1,78 +1,103 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../css/Login.css"
+import "../css/Login.css";
 import { setNestedObjectValues, useFormik } from "formik";
 
-
 const NewPassword = (props) => {
-    const [credentials, setCredentials] = useState({
-        username: undefined,
-        password: undefined,
-      });
-      const [id,setId] = useState("");
-      const [error3,setError3]= useState("");
-    // console.log(credentials)
-    //   const { loading, error, dispatch } = useContext(AuthContext);
-    
-      const navigate = useNavigate()
-    
-      const handleChange = (e) => {
-        setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-      };
-    
-      const handleClick = async (values) => {
-        // e.preventDefault();
-        console.log(values)
-        try {
-          const res = await axios.post("https://localhost:8800/api/auth/", values);
-          console.log(res.data)
-          setId(res.data.details._id);
-          navigate("/new-password")
-          
-       
+  const [id, setId] = useState("");
+  const [token1, setToken1] = useState("");
+  const [error3, setError3] = useState("");
+  const [click3,setClick3]= useState(false);
+  // console.log(credentials)
+  //   const { loading, error, dispatch } = useContext(AuthContext);
 
-        } catch (err) {
-        console.error(err);
-        console.log("Wrong password or username!")
-        setError3("Wrong password or username!")
-        }
-      };
-    
-      const validate = values => {
-        const errors = {};
-        if (!values.username) {
-          errors.username = 'Required';
-        } else if (values.username.length > 30) {
-          errors.username = 'Must be 15 characters or less';
-        }
-      
-        if (!values.password) {
-          errors.password = 'Required';
-        } else if (values.password.length > 10) {
-          errors.password = 'Must be 20 characters or less';
-        }
-      
-     
-      
-        return errors;
-      };
+  const navigate = useNavigate();
 
-      const formik = useFormik({
-        initialValues: {
-          username: '',
-          password: '',
-         
-        },
-        validate,
-        onSubmit: values => {
+  useEffect(() => {
+    const currentUrl = window.location.toString();
+    console.log(currentUrl);
 
-          // alert(JSON.stringify(values, null, 2));
-          handleClick(values)
-        },
-      });
-    
+    const url = new URL(currentUrl);
+
+    const id1 = url.pathname.split("/")[2]; // 665eabfb656f1bbf5bab991e
+    const token = url.pathname.split("/")[3]; // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRldkBicmFuZGZvcnR1bmVzLmNvbSIsImlkIjoiNjY1ZWFiZmI2NTZmMWJiZjViYWI5OTFlIiwiaWF0IjoxNzE3NTYwNzQ5LCJleHAiOjE3MTc1NjEwNDl9.HKokLjEiUi4QH0sDWI56zjZkeNOJg6snmf464BpcosQ
+    setId(id1);
+    setToken1(token);
+  }, []);
+  console.log(id);
+  console.log(token1);
+  // const urlParams = new URLSearchParams(window.location.search);
+
+  // if (urlParams.has('id_token') && urlParams.has('access_token')) {
+  //   const idToken = urlParams.get('id_token');
+  //   const accessToken = urlParams.get('access_token');
+  //   console.log("ID Token:", idToken);
+  //   console.log("Access Token:", accessToken);
+  //   // Use the tokens as needed
+  // } else {
+  //   console.log("Query parameters not found in the URL");
+  //   // You can also redirect to a login page or handle the error as per your requirement
+  // }
+
+  // const handleChange = (e) => {
+  //   setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  // };
+
+  const handleClick = async (values) => {
+    // e.preventDefault();
+    navigate("/password-confirmation");
+    console.log(values);
+    console.log(id, token1);
+    try {
+      const res = await axios.post(
+        `http://localhost:8800/api/auth/reset-password/${id}/${token1}`,
+        values
+      );
+      console.log(res.data);
+      // setId(res.data.details._id);
+
+      // navigate("/new-password")
+      console.log("updated");
+    } catch (err) {
+      console.error(err);
+      console.log("Wrong password or username!");
+      setError3("Wrong password or username!");
+    }
+  };
+
+  const validate = (values) => {
+    const errors = {};
+    if (!values.username) {
+      errors.username = "Required";
+    } else if (values.username.length > 30) {
+      errors.username = "Must be 30 characters or less";
+    }
+
+    if (!values.password) {
+      errors.password = "Required";
+    } else if (values.password.length > 15) {
+      errors.password = "Must be 15 characters or less";
+    } else if (values.username !== values.password) {
+      errors.password = "Password not equal";
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      handleClick(values);
+    },
+  });
+
   return (
     <div>
       <div class="container-custom mr-0 pr-0">
@@ -84,63 +109,68 @@ const NewPassword = (props) => {
                 alt=""
               />
             </div>
-            <div class="row">
-              <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
-                <div class="col-md-6">
-                  <form onSubmit={formik.handleSubmit}>
-                    <div class="form-group mt-2">
-                      <label for="email" class="label-style mb-0">
-                        New password
-                      </label>
-                      <div>
-                        <input
-                          class="form-control"
-                         name="username"
-                        id="username"
-                          placeholder="Example : johndoe@mail.com"
-                          type="username"
-                        //   value=""
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                        />
+            (
+              <div class="row">
+                <div class="col-md-12 d-flex flex-column justify-content-center align-items-center">
+                  <div class="col-md-6">
+                    <form onSubmit={formik.handleSubmit}>
+                      <div class="form-group mt-2">
+                        <label for="email" class="label-style mb-0">
+                          New password
+                        </label>
+                        <div>
+                          <input
+                            class="form-control"
+                            name="username"
+                            id="username"
+                            placeholder="Example : johndoe@mail.com"
+                            type="username"
+                            //   value=""
+                            onChange={formik.handleChange}
+                            value={formik.values.username}
+                          />
+                        </div>
+                        {formik.errors.username ? (
+                          <div className="error1">{formik.errors.username}</div>
+                        ) : null}
                       </div>
-                      {formik.errors.username ? <div className="error1">{formik.errors.username}</div> : null}
-                    </div>
-                    <div class="form-group mt-1">
-                      <label for="password" class="label-style mb-0">
-                        Conform password
-                      </label>
-                      <div>
-                        <input
-                          class="form-control"
-                         name="password"
-                        id="password"
-                          placeholder="Your older password"
-                          type="password"
-                        //   value=""
-                        onChange={formik.handleChange}
-         value={formik.values.password}
-                        />
+                      <div class="form-group mt-1">
+                        <label for="password" class="label-style mb-0">
+                          Conform password
+                        </label>
+                        <div>
+                          <input
+                            class="form-control"
+                            name="password"
+                            id="password"
+                            placeholder="Your older password"
+                            type="password"
+                            //   value=""
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                          />
+                        </div>
+                        {formik.errors.password ? (
+                          <div className="error1">{formik.errors.password}</div>
+                        ) : null}
                       </div>
-                      {formik.errors.password ? <div className="error1">{formik.errors.password}</div> : null}
-                    </div>
-                    <button
-                      type="submit"
-                      class="col-md-12 btn btn-lg btn-block login-btn mt-4 mb-4"
-                      
-                    >
-                      Submit
-                    </button>
-                    {(error3 != "") ?<div className="error1">{error3}</div> : null}
-
-                  </form>
+                      <button
+                        type="submit"
+                        class="col-md-12 btn btn-lg btn-block login-btn mt-4 mb-4"
+                      >
+                        Submit
+                      </button>
+                      {error3 != "" ? (
+                        <div className="error1">{error3}</div>
+                      ) : null}
+                    </form>
+                  </div>
+                  <div class="text">
+                    <a href="/login">Signin</a>
+                  </div>
                 </div>
-                <div class="text">
-        <a href="/login">Signin</a>
-      </div>
-              
               </div>
-            </div>
+            )
           </div>
           <div class="col-md-4 text-right pr-0">
             <img
