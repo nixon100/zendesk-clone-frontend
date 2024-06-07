@@ -36,11 +36,11 @@ const ForgetPassword = (props) => {
         console.log(values, id);
         try {
           const res = await axios.put(
-            `http://localhost:8800/api/auth/${id}`,
+            `https://zendesk-clone-backend.onrender.com/api/auth/${id}`,
             values
           );
           console.log(res.data);
-          console.log(`https://localhost:8800/api/auth/${id}`);
+          console.log(`https://zendesk-clone-backend.onrender.com/api/auth/${id}`);
           setClickL(true);
           // setClickN(true)
           // navigate("/new-password");
@@ -58,7 +58,7 @@ const ForgetPassword = (props) => {
       // e.preventDefault();
       try {
         const res = await axios.post(
-          "http://localhost:8800/api/auth/login",
+          "https://zendesk-clone-backend.onrender.com/api/auth/login",
           values
         );
         console.log(res.data);

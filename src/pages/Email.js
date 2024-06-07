@@ -30,7 +30,7 @@ console.log(cm)
     // e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:8800/api/auth/reset-password",
+        "https://zendesk-clone-backend.onrender.com/api/auth/reset-password",
         values
       );
       console.log(res.data);

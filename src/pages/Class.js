@@ -373,7 +373,7 @@ const Class = () => {
     setClick(true);
     axios
       .get(
-        `http://localhost:8800/api/class/${ids[index - 1]}`
+        `https://zendesk-clone-backend.onrender.com/api/class/${ids[index - 1]}`
       )
       .then((response) => {
         //   console.log(response.data);
