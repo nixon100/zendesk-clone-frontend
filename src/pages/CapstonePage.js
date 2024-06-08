@@ -53,7 +53,7 @@ const CapstonePage = () => {
   return click ? (
     <SplitCapstone setClick={setClick} data={data} index={index} subdata={subdata}/>
   ) : (
-    <div class="Body_body__box__Y49P-">
+    <div class="Body_body__box__Y49P-ghy">
       <div class="Body_body__wrapper__6cj6C">
         <div class="Navbar_navbar__container__3Q3Zl">
           <div class="sc-jTrPJq gFWlwy">
