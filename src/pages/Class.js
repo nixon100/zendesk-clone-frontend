@@ -462,7 +462,7 @@ const Class = () => {
 
   return (
     
-      <div class="Body_body__box__Y49P-">
+      <div class="Body_body__box__Y49P-ghy">
       <div class="Body_body__wrapper__6cj6C">
         <div class="Body_body__content__full__1L5Pm">
           <div class="row-container">
