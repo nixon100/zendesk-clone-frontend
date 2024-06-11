@@ -651,7 +651,7 @@ const TaskPart = (props) => {
                                   value={formik.values.comments}
                                 />
                               </div>
-                              {formik.errors.comments ? <div>{formik.errors.comments}</div> : null}
+                              {formik.errors.comments ? <div className="err1">{formik.errors.comments}</div> : null}
                             </div>
                           </div>
                           <div class="d-flex justify-content-end"></div>
