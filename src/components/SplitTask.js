@@ -35,7 +35,7 @@ const SplitTask = (props) => {
   const Card = ({ batch, day, createdAt, mark, type,itemkey }) => (
     <div className={props.activeKey === itemkey? 'taskContainer sideBox1 flexCont w-100 mt-0 mb-3 mx-2 py-3' : 'ideBox1 flexCont w-100 mt-0 mb-2 mx-2 py-3'} onClick={() => handleClick(itemkey)}>
       <div class="flexCont">
-        <div>
+        <div className="content22">
           <div class="title weight-500">Nixon Paul</div>
           <div class="row d-flex align-items-center justify-content-evenly mx-1 secondaryGreyTextColor">
             <div class="mx-1">{batch}</div>
@@ -59,7 +59,7 @@ const SplitTask = (props) => {
     <div>
       <div class="sc-dmqHEX dPUVXQ">
         <div class="sc-jTrPJq gFWlwy">
-          <button class="sc-hLseeU bfIGar" onClick={()=>props.setClick(false)}>
+          <button class="taskButton" onClick={()=>props.setClick(false)}>
             <div color="" class="sc-beqWaB dBJvAj">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

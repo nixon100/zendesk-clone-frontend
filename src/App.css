@@ -1434,3 +1434,24 @@ button.but{
 h5 {
   color: #555a8f;
 }
+
+button.taskButton {
+  height: 48px;
+  background: white;
+  border: 1px solid #4b0dba;
+  box-sizing: border-box;
+  border-radius: 8px;
+  /* margin-bottom: 0px; */
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  align-items: center;
+  align-items: center;
+  padding: 0px 16px 0px 14px;
+}
+.sc-beqWaB.dBJvAj {
+  margin-right: 5px;
+}
+.content22 {
+  margin-left: 10px;
+}

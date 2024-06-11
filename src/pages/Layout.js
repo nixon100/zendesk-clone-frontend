@@ -301,7 +301,7 @@ const Layout = (props) => {
                       to="/tasks"
                       role="menuitem"
                       className="ml-4"
-                      onClick={() => setHed("Tasks")}
+                      onClick={() => setHed("Tasks Submissions")}
                     >
                       Tasks
                     </Link>
