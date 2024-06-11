@@ -41,7 +41,7 @@ const Registration = (e) => {
     // console.log(form)
     try {
       const res = await axios.post(
-        "https://zendesk-clone-backend.onrender.com/api/auth/register",
+        "http://localhost:8800/api/auth/register",
         values
       );
       console.log(res.data);
@@ -75,8 +75,8 @@ const Registration = (e) => {
 
     if (!values.country) {
       errors.country = "Required";
-    } else if (values.country.length > 10) {
-      errors.country = "Must be 10 characters or less";
+    } else if (values.country.length > 20) {
+      errors.country = "Must be 20 characters or less";
     }
 
     if (!values.city) {
@@ -87,6 +87,8 @@ const Registration = (e) => {
 
     if (!values.phone) {
       errors.phone = "Required";
+    } else if (!/^\d+$/.test(values.phone)) {
+      errors.phone = "Enter only numbers";
     } else if (values.phone.length > 10) {
       errors.phone = "Must be 10 characters or less";
     }
