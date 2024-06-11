@@ -41,7 +41,7 @@ const Registration = (e) => {
     // console.log(form)
     try {
       const res = await axios.post(
-        "http://localhost:8800/api/auth/register",
+        "https://zendesk-clone-backend.onrender.com/api/auth/register",
         values
       );
       console.log(res.data);
