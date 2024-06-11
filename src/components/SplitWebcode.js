@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { setNestedObjectValues, useFormik } from "formik";
 
 const SplitWebcode = (props) => {
   const data = props.data[props.index];
@@ -15,20 +16,22 @@ const SplitWebcode = (props) => {
   // const subData = clickS ? submission:  props.subdata[props.index];
   const subData = submission;
   console.log(subData);
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+
+  const handleSubmit = async (values) => {
+    // event.preventDefault();
+    console.log("yessssssssssssssssssssssss")
     setClickS(true);
     setMark(true);
-    const formData = {
-      frontEndSourceCode: fscode,
-      frontEndDeployedUrl: fdcode,
-      comments: comments,
-    };
-    console.log(formData);
+    // const formData = {
+    //   frontEndSourceCode: fscode,
+    //   frontEndDeployedUrl: fdcode,
+    //   comments: comments,
+    // };
+    // console.log(formData);
     try {
       const response = await axios.post(
         "https://zendesk-clone-backend.onrender.com/api/webcode/submission",
-        formData
+        values
       );
       console.log(response.data);
       setSubmission(response.data);
@@ -38,6 +41,46 @@ const SplitWebcode = (props) => {
       throw error;
     }
   };
+  ///////////////////////
+  const validateUrl = (value) => {
+    try {
+      new URL(value);
+      return undefined;
+    } catch (error) {
+      return 'Invalid URL';
+    }
+  };
+
+  const validate = (values) => {
+    const errors = {};
+    if (!values.frontEndSourceCode) {
+      errors.frontEndSourceCode = "Required";
+    }
+    if (!values.frontEndDeployedUrl) {
+      errors.frontEndDeployedUrl = "Required";
+    }
+
+    if (!values.comments) {
+      errors.comments = "Required";
+    } else if (values.comments.length > 30) {
+      errors.comments = "Must be 30 characters or less";
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      frontEndSourceCode: "",
+      frontEndDeployedUrl: "",
+      comments: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      handleSubmit(values);
+    },
+  });
 
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
@@ -271,11 +314,11 @@ const SplitWebcode = (props) => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="codeName">Front-end Deployed URL</td>
+                    <td class="codeName">Front-end Deployed URL :</td>
                     <td>
                       {" "}
                       <a
-                        href="https://nixon100.github.io/webcode/"
+                        href={subData.frontEndDeployedUrl}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -285,16 +328,30 @@ const SplitWebcode = (props) => {
                     </td>
                   </tr>
                   <tr>
-                    <td class="codeName">Front-end Source code</td>
+                    <td class="codeName">Front-end Source code :</td>
                     <td>
                       {" "}
                       <a
-                        href="https://github.com/nixon100/webcode"
+                        href={subData.frontEndSourceCode}
                         target="_blank"
                         rel="noreferrer"
                       >
                         {" "}
                         {subData.frontEndSourceCode}{" "}
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="codeName">Comments :</td>
+                    <td>
+                      {" "}
+                      <a
+                        href={subData.comments}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {" "}
+                        {subData.comments}{" "}
                       </a>
                     </td>
                   </tr>
@@ -313,7 +370,7 @@ const SplitWebcode = (props) => {
               </div>
             </div>
           ) : (
-            <div>
+            <form onSubmit={formik.handleSubmit}>
               <table class="table">
                 <thead>
                   <tr>
@@ -328,9 +385,17 @@ const SplitWebcode = (props) => {
                       <input
                         type="text"
                         class="codeSubmission"
-                        onChange={(event) => setFscode(event.target.value)}
+                        // onChange={(event) => setFscode(event.target.value)}
+                        onChange={formik.handleChange}
+                        name="frontEndSourceCode"
+                        value={formik.values.frontEndSourceCode}
                       />
                     </td>
+                    {formik.errors.frontEndSourceCode ? (
+                      <div className="err1">
+                        {formik.errors.frontEndSourceCode}
+                      </div>
+                    ) : null}
                   </tr>
                   <tr>
                     <td class="codeName">Front-end Deployed URL</td>
@@ -338,9 +403,17 @@ const SplitWebcode = (props) => {
                       <input
                         type="text"
                         class="codeSubmission"
-                        onChange={(event) => setFdcode(event.target.value)}
+                        // onChange={(event) => setFdcode(event.target.value)}
+                        onChange={formik.handleChange}
+                        name="frontEndDeployedUrl"
+                        value={formik.values.frontEndDeployedUrl}
                       />
                     </td>
+                    {formik.errors.frontEndDeployedUrl ? (
+                      <div className="err1">
+                        {formik.errors.frontEndDeployedUrl}
+                      </div>
+                    ) : null}
                   </tr>
 
                   <tr>
@@ -352,9 +425,15 @@ const SplitWebcode = (props) => {
                         type="text"
                         class="codeSubmission"
                         placeholder="leave your comments here"
-                        onChange={(event) => setComments(event.target.value)}
+                        // onChange={(event) => setComments(event.target.value)}
+                        onChange={formik.handleChange}
+                        name="comments"
+                        value={formik.values.comments}
                       />
                     </td>
+                    {formik.errors.comments ? (
+                      <div className="err1">{formik.errors.comments}</div>
+                    ) : null}
                   </tr>
                 </tbody>
               </table>
@@ -363,7 +442,7 @@ const SplitWebcode = (props) => {
                 <button
                   class="btn reqbuttoncreate"
                   type="submit"
-                  onClick={handleSubmit}
+                  // onClick={handleSubmit}
                 >
                   Submit
                 </button>
@@ -381,7 +460,7 @@ const SplitWebcode = (props) => {
                 <strong>Warning</strong>: 2 mark may be deducted automatically
                 from your total score if your submission is beyond the deadline
               </p>
-            </div>
+            </form>
           )}
         </div>
       </div>

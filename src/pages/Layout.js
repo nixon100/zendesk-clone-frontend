@@ -23,6 +23,28 @@ const Layout = (props) => {
   const [hed, setHed] = useState("Class");
   const [click, setClick] = useState(false);
 
+
+
+useEffect(()=>{
+  if (window.location.pathname === '/capstone') {
+    // call the aa function with a name parameter
+    setHed("Capstone")
+  }
+  if (window.location.pathname === '/dashboard') {
+    // call the aa function with a name parameter
+    setHed("Dashboard")
+  }
+  if (window.location.pathname === '/tasks') {
+    // call the aa function with a name parameter
+    setHed("Tasks Submission")
+  }
+  if (window.location.pathname === '/webcode') {
+    // call the aa function with a name parameter
+    setHed("Webcode")
+  }
+
+},[])
+
   useEffect(() => {
     if (!localStorage.getItem("access_token")) {
       navigate("/login");
@@ -385,7 +407,7 @@ const Layout = (props) => {
                       to="/capstone"
                       role="menuitem"
                       className="ml-4"
-                      onClick={() => setHed("Capstone")}
+                      onClick={()=>setHed("Capstone")}
                     >
                       Capstone
                     </Link>

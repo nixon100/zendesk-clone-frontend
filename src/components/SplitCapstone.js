@@ -1,11 +1,12 @@
 import React from "react";
 import axios from "axios";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import { setNestedObjectValues, useFormik } from "formik";
 
 const SplitCapstone = (props) => {
   console.log(props.data[props.index].username);
   const data = props.data[props.index];
- 
+
   console.log(data.websites);
   const [fscode, setFscode] = useState("");
   const [fdcode, setFdcode] = useState("");
@@ -14,66 +15,117 @@ const SplitCapstone = (props) => {
   const [comments, setComments] = useState("");
   const [submission, setSubmission] = useState([]);
   const [clickS, setClickS] = useState(false);
-  const [mark,setMark] = useState(false);
+  const [mark, setMark] = useState(false);
   // const subData = props.subdata[props.index];
   const subData = submission;
 
   function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
     const options = {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
       hour12: true,
     };
-    const formattedTime = new Intl.DateTimeFormat('en-US', options).format(date);
-    const dayWithOrdinal = formattedTime.split(', ')[1].replace(/\d+/, (day) => {
-      const suffixes = ['th', 'st', 'nd', 'rd'];
-      const mod = day % 100;
-      return mod >= 11 && mod <= 13
-        ? day + 'th'
-        : day + (suffixes[mod % 10] || 'th');
-    });
-    return `submitted ${dayWithOrdinal}, ${formattedTime.split(', ')[0]}`;
+    const formattedTime = new Intl.DateTimeFormat("en-US", options).format(
+      date
+    );
+    const dayWithOrdinal = formattedTime
+      .split(", ")[1]
+      .replace(/\d+/, (day) => {
+        const suffixes = ["th", "st", "nd", "rd"];
+        const mod = day % 100;
+        return mod >= 11 && mod <= 13
+          ? day + "th"
+          : day + (suffixes[mod % 10] || "th");
+      });
+    return `submitted ${dayWithOrdinal}, ${formattedTime.split(", ")[0]}`;
   }
 
   const timestamp = data.updatedAt; // June 14th, 2023 12:22:20 PM
-const formattedTime = formatTimestamp(timestamp);
-console.log(formattedTime);
+  const formattedTime = formatTimestamp(timestamp);
+  console.log(formattedTime);
 
+  //////////////////////////
+  const validateUrl = (value) => {
+    const urlRegex =
+      /^(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]$/;
+    if (!urlRegex.test(value)) {
+      return "Invalid URL";
+    }
+  };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const validate = (values) => {
+    const errors = {};
+    if (!values.frontEndSourceCode) {
+      errors.frontEndSourceCode = "Required";
+    }
+    if (!values.frontEndDeployedUrl) {
+      errors.frontEndDeployedUrl = "Required";
+    }
+    if (!values.backEndSourceCode) {
+      errors.backEndSourceCode = "Required";
+    }
+
+    if (!values.backEndDeployedUrl) {
+      errors.backEndDeployedUrl = "Required";
+    } 
+
+    if (!values.comments) {
+      errors.comments = "Required";
+    }else if (values.comments.length > 30) {
+      errors.comments = "Must be 30 characters or less";
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      frontEndSourceCode: "",
+      frontEndDeployedUrl: "",
+      backEndSourceCode: "",
+      backEndDeployedUrl: "",
+      comments: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      handleSubmit(values);
+    },
+  });
+
+  const handleSubmit = async (values) => {
+    // event.preventDefault();
+    console.log(values);
     setClickS(true);
     setMark(true);
-    const formData = {
-      frontEndSourceCode: fscode,
-      frontEndDeployedUrl: fdcode,
-      backEndSourceCode: bscode,
-      backEndDeployedUrl: bdcode,
-      comments: comments,
-    };
-    console.log(formData);
+    // const formData = {
+    //   frontEndSourceCode: fscode,
+    //   frontEndDeployedUrl: fdcode,
+    //   backEndSourceCode: bscode,
+    //   backEndDeployedUrl: bdcode,
+    //   comments: comments,
+    // };
+    // console.log(formData);
     try {
       const response = await axios.post(
         "https://zendesk-clone-backend.onrender.com/api/capstone/submission",
-        formData
+        values
       );
       console.log(response.data);
-      setSubmission(response.data)
+      setSubmission(response.data);
       return response.data;
       // Wait for the POST request to complete before calling getaxios
     } catch (error) {
       console.error(error);
       throw error;
     }
-   
   };
 
-  console.log(submission)
-  
+  console.log(submission);
 
   return (
     <div class="Body_body__box__Y49P-ghy">
@@ -107,7 +159,7 @@ console.log(formattedTime);
                 <div class="mx-2">
                   <div class="ml-3 mr-1 d-flex align-self-end justify-content-end">
                     <div class="secondaryGreyTextColor mx-1 px-1 rounded">
-                    {mark ?formattedTime : data.status }
+                      {mark ? formattedTime : data.status}
                     </div>
                     <div class="marktag mx-1 px-3 rounded">{data.mark}</div>
 
@@ -131,10 +183,9 @@ console.log(formattedTime);
               <div>
                 <div class="ml-3 mr-1 d-flex align-self-end justify-content-end">
                   <div class="secondaryGreyTextColor mx-1 px-1 rounded">
-                  {mark ?formattedTime : data.status }
+                    {mark ? formattedTime : data.status}
                   </div>{" "}
                   <div class="marktag mx-1 px-3 rounded">{data.mark}</div>
-
                   <div class="tasktag px-2 rounded">capstone</div>
                 </div>
               </div>
@@ -255,86 +306,100 @@ console.log(formattedTime);
 
             {clickS ? (
               <div>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Code</th>
-                    <th scope="col">Submission</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="codeName">Front-end Deployed URL</td>
-                    <td>
-                      {" "}
-                      <a
-                        href="https://nixon100.github.io/webcode/"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Code</th>
+                      <th scope="col">Submission</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="codeName">Front-end Deployed URL :</td>
+                      <td>
                         {" "}
-                        {subData.frontEndDeployedUrl}{" "}
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="codeName">Front-end Source code</td>
-                    <td>
-                      {" "}
-                      <a
-                        href="https://github.com/nixon100/webcode"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                        <a
+                          href={subData.frontEndDeployedUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {" "}
+                          {subData.frontEndDeployedUrl}{" "}
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="codeName">Front-end Source code :</td>
+                      <td>
                         {" "}
-                        {subData.frontEndSourceCode}{" "}
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="codeName">Back-end Deployed URL</td>
-                    <td>
-                      {" "}
-                      <a
-                        href="https://nixon100.github.io/webcode/"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                        <a
+                          href={subData.frontEndSourceCode}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {" "}
+                          {subData.frontEndSourceCode}{" "}
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="codeName">Back-end Deployed URL :</td>
+                      <td>
                         {" "}
-                        {subData.backEndDeployedUrl}{" "}
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="codeName">Back-end Source code</td>
-                    <td>
-                      {" "}
-                      <a
-                        href="https://nixon100.github.io/webcode/"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                        <a
+                          href={subData.backEndDeployedUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {" "}
+                          {subData.backEndDeployedUrl}{" "}
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="codeName">Back-end Source code :</td>
+                      <td>
                         {" "}
-                        {subData.backEndSourceCode}{" "}
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-                 <div class="col-12 marksContainer">
-                 <div class="row d-flex align-itmes-center justify-content-between mx-1">
-                   <div class="col-12">
-                     <div class="mx-2 mt-3">Comments:</div>
-                     <div class="mx-2 mt-0 mb-3 py-3 px-2 rounded commentsstudent">
-                       admin command.............
-                     </div>
-                   </div>
-                 </div>
-                 <hr class="containerDivider mx-1" />
-               </div>
-               </div>
+                        <a
+                          href={subData.backEndSourceCode}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {" "}
+                          {subData.backEndSourceCode}{" "}
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="codeName">Comments :</td>
+                      <td>
+                        {" "}
+                        <a
+                          href={subData.comments}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {" "}
+                          {subData.comments}{" "}
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="col-12 marksContainer">
+                  <div class="row d-flex align-itmes-center justify-content-between mx-1">
+                    <div class="col-12">
+                      <div class="mx-2 mt-3">Comments:</div>
+                      <div class="mx-2 mt-0 mb-3 py-3 px-2 rounded commentsstudent">
+                        admin command.............
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="containerDivider mx-1" />
+                </div>
+              </div>
             ) : (
-              <div>
+              <form onSubmit={formik.handleSubmit}>
                 <table class="table">
                   <thead>
                     <tr>
@@ -349,9 +414,17 @@ console.log(formattedTime);
                         <input
                           type="text"
                           class="codeSubmission"
-                          onChange={(event) => setFscode(event.target.value)}
+                          // onChange={(event) => setFscode(event.target.value)}
+                          onChange={formik.handleChange}
+                          name="frontEndSourceCode"
+                          value={formik.values.frontEndSourceCode}
                         />
                       </td>
+                      {formik.errors.frontEndSourceCode ? (
+                        <div className="err1">
+                          {formik.errors.frontEndSourceCode}
+                        </div>
+                      ) : null}
                     </tr>
                     <tr>
                       <td class="codeName">Front-end Deployed URL</td>
@@ -359,9 +432,17 @@ console.log(formattedTime);
                         <input
                           type="text"
                           class="codeSubmission"
-                          onChange={(event) => setFdcode(event.target.value)}
+                          // onChange={(event) => setFdcode(event.target.value)}
+                          onChange={formik.handleChange}
+                          name="frontEndDeployedUrl"
+                          value={formik.values.frontEndDeployedUrl}
                         />
                       </td>
+                      {formik.errors.frontEndDeployedUrl ? (
+                        <div className="err1">
+                          {formik.errors.frontEndDeployedUrl}
+                        </div>
+                      ) : null}
                     </tr>
                     <tr>
                       <td class="codeName">Back-end Source code</td>
@@ -369,9 +450,17 @@ console.log(formattedTime);
                         <input
                           type="text"
                           class="codeSubmission"
-                          onChange={(event) => setBscode(event.target.value)}
+                          // onChange={(event) => setBscode(event.target.value)}
+                          onChange={formik.handleChange}
+                          name="backEndSourceCode"
+                          value={formik.values.backEndSourceCode}
                         />
                       </td>
+                      {formik.errors.backEndSourceCode ? (
+                        <div className="err1">
+                          {formik.errors.backEndSourceCode}
+                        </div>
+                      ) : null}
                     </tr>
                     <tr>
                       <td class="codeName">Back-end Deployed URL</td>
@@ -379,9 +468,17 @@ console.log(formattedTime);
                         <input
                           type="text"
                           class="codeSubmission"
-                          onChange={(event) => setBdcode(event.target.value)}
+                          // onChange={(event) => setBdcode(event.target.value)}
+                          onChange={formik.handleChange}
+                          name="backEndDeployedUrl"
+                          value={formik.values.backEndDeployedUrl}
                         />
                       </td>
+                      {formik.errors.backEndDeployedUrl ? (
+                        <div className="err1">
+                          {formik.errors.backEndDeployedUrl}
+                        </div>
+                      ) : null}
                     </tr>
                     <tr>
                       <td>
@@ -392,26 +489,29 @@ console.log(formattedTime);
                           type="text"
                           class="codeSubmission"
                           placeholder="leave your comments here"
-                          onChange={(event) => setComments(event.target.value)}
+                          // onChange={(event) => setComments(event.target.value)}
+                          onChange={formik.handleChange}
+                          name="comments"
+                          value={formik.values.comments}
                         />
                       </td>
+                      {formik.errors.comments ? (
+                        <div className="err1">{formik.errors.comments}</div>
+                      ) : null}
                     </tr>
                   </tbody>
                 </table>
-             
-            
-           
 
-            <div class="pl-2 my-0 align-self-end text-center">
-              <button
-                class="btn reqbuttoncreate"
-                type="submit"
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
-            </div>
-            {/* <div class="d-none">
+                <div class="pl-2 my-0 align-self-end text-center">
+                  <button
+                    class="btn reqbuttoncreate"
+                    type="submit"
+                    // onClick={handleSubmit}
+                  >
+                    Submit
+                  </button>
+                </div>
+                {/* <div class="d-none">
               <div class="row d-flex align-itmes-center justify-content-between mx-1">
                 <div class="col-12">
                   <div class="mx-2 mt-3">Comments:</div>
@@ -420,13 +520,13 @@ console.log(formattedTime);
               </div>
               <hr class="containerDivider mx-1" />
             </div> */}
-            <p style={{ padding: "8px", color: "rgb(250, 185, 20)" }}>
-              <strong>Warning</strong>: 2 mark may be deducted automatically
-              from your total score if your submission is beyond the deadline
-            </p>
-            </div>
+                <p style={{ padding: "8px", color: "rgb(250, 185, 20)" }}>
+                  <strong>Warning</strong>: 2 mark may be deducted automatically
+                  from your total score if your submission is beyond the
+                  deadline
+                </p>
+              </form>
             )}
-             
           </div>
         </div>
       </div>
