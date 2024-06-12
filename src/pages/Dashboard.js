@@ -11,7 +11,9 @@ const Dashboard = () => {
   const [countT, setCountT] = useState([]);
   const [per, setPer] = useState();
   const [codeK, setCodeK] = useState(0);
+  const [totalC ,setTotalC] = useState(0);
   const [webK, setWebK] = useState(0);
+  const [totalW,setTotalW] = useState(0);
 
   useEffect(() => {
     axios
@@ -21,34 +23,48 @@ const Dashboard = () => {
         const data = response.data
         const totalMarks = data.count.reduce((acc, current) => acc + current.mark, 0);
         console.log(totalMarks); // Output: 20
-        setCodeK(totalMarks); // This should log the data from the Capstone collection
+        setTotalC(totalMarks); // This should log the data from the Capstone collection
       })
       .catch((error) => {
         console.error(error); // This will log any errors that occur
       });
   }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8800/api/codekata/submission")
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setCodeK(response.data.count); // This should log the data from the Capstone collection
-  //     })
-  //     .catch((error) => {
-  //       console.error(error); // This will log any errors that occur
-  //     });
-  // }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8800/api/webkata/submission")
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setWebK(response.data); // This should log the data from the Capstone collection
-  //     })
-  //     .catch((error) => {
-  //       console.error(error); // This will log any errors that occur
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8800/api/codekata/submission")
+      .then((response) => {
+        console.log(response.data);
+        setCodeK(response.data.count); // This should log the data from the Capstone collection
+      })
+      .catch((error) => {
+        console.error(error); // This will log any errors that occur
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8800/api/webkata/submission")
+      .then((response) => {
+        console.log(response.data.count);
+        setWebK(response.data.count); // This should log the data from the Capstone collection
+      })
+      .catch((error) => {
+        console.error(error); // This will log any errors that occur
+      });
+  }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8800/api/webkata/total")
+      .then((response) => {
+        console.log(response.data);
+        const data = response.data
+        const totalMarks = data.count.reduce((acc, current) => acc + current.mark, 0);
+        console.log(totalMarks); // Output: 20
+        setTotalW(totalMarks); // This should log the data from the Capstone collection
+      })
+      .catch((error) => {
+        console.error(error); // This will log any errors that occur
+      });
+  }, []);
   useEffect(() => {
     axios
       .get("https://zendesk-clone-backend.onrender.com/api/webcode")
@@ -130,7 +146,7 @@ const Dashboard = () => {
                       Codekata
                       </div>
                       <div class="Dashboard_attendance__number__3pO5v">
-                        6.90%
+                        {totalC}
                       </div>
                     </div>
                     <ul class="list-group mt-2">
@@ -175,7 +191,7 @@ const Dashboard = () => {
                       Webkata
                       </div>
                       <div class="Dashboard_attendance__number__3pO5v">
-                        6.90%
+                       {totalW}
                       </div>
                     </div>
                     <ul class="list-group mt-2">
