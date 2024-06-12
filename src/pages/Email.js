@@ -26,7 +26,7 @@ console.log(cm)
   // };
 
   const handleClick = async (values) => {
-    setCm(true)
+   
     // e.preventDefault();
     try {
       const res = await axios.post(
@@ -35,8 +35,9 @@ console.log(cm)
       );
       console.log(res.data);
       setId(res.data._id);
-      
+      setError3(res.data.status)
       setClickN(true);
+      setCm(true)
       // navigate("/new-password");
     } catch (err) {
       console.error(err);

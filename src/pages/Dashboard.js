@@ -8,10 +8,47 @@ const Dashboard = () => {
   const [mock, setMock] = useState([]);
   const [avr, setAvr] = useState();
   const [mavr, setMavr] = useState();
-  const [countT,setCountT] = useState([]);
-  const [per,setPer] = useState()
+  const [countT, setCountT] = useState([]);
+  const [per, setPer] = useState();
+  const [codeK, setCodeK] = useState(0);
+  const [webK, setWebK] = useState(0);
 
-
+  useEffect(() => {
+    axios
+      .get("http://localhost:8800/api/codekata/total")
+      .then((response) => {
+        console.log(response.data);
+        const data = response.data
+        const totalMarks = data.count.reduce((acc, current) => acc + current.mark, 0);
+        console.log(totalMarks); // Output: 20
+        setCodeK(totalMarks); // This should log the data from the Capstone collection
+      })
+      .catch((error) => {
+        console.error(error); // This will log any errors that occur
+      });
+  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8800/api/codekata/submission")
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setCodeK(response.data.count); // This should log the data from the Capstone collection
+  //     })
+  //     .catch((error) => {
+  //       console.error(error); // This will log any errors that occur
+  //     });
+  // }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8800/api/webkata/submission")
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setWebK(response.data); // This should log the data from the Capstone collection
+  //     })
+  //     .catch((error) => {
+  //       console.error(error); // This will log any errors that occur
+  //     });
+  // }, []);
   useEffect(() => {
     axios
       .get("https://zendesk-clone-backend.onrender.com/api/webcode")
@@ -70,16 +107,165 @@ const Dashboard = () => {
     }
   }, [mock]);
   useEffect(() => {
-    const a = (countT.count / 29) *100;
+    const a = (countT.count / 29) * 100;
     setPer(a.toFixed(2));
-  },[countT]);
-  
-  console.log(per)
+  }, [countT]);
+
+  console.log(per);
 
   return (
     <div class="Body_body__box__Y49P-">
       <div class="Body_body__wrapper__6cj6C">
         <div class="Body_body__content__full__1L5Pm">
+        <div class="d-flex justify-content-center">
+         
+            <div class="col-md-6 col-lg-6">
+              <div class="Cards_custom__card__style__1fFQJ">
+                <div class="Cards_card__header__1H8GS"></div>
+                <div class="card Cards_card__border__xEgVC p-3">
+                  <div class="Dashboard_chart__topic__3JSqN">Codekata</div>
+                  <div class="Dashboard_card__body__2t5M0 mb-5">
+                    <div class="Dashboard_card__heading__LZe4X">
+                      <div class="Dashboard_card__title__3xUJ_">
+                      Codekata
+                      </div>
+                      <div class="Dashboard_attendance__number__3pO5v">
+                        6.90%
+                      </div>
+                    </div>
+                    <ul class="list-group mt-2">
+                      <li
+                        class="d-flex justify-content-between align-items-center"
+                        style={{"padding-left": "30px","padding-top": "5px","font-weight": "bold"}}
+                      >
+                        submitted task
+                        <span
+                          class="456"
+                          style={{"padding-left": "30px","padding-top": "5px","font-weight": "bold"}}
+                        >
+                          {" "}
+                          {codeK}
+                        </span>
+                      </li>
+                    </ul>
+                    {/* <ul class="list-group mt-2">
+                      <li
+                        class="d-flex justify-content-between align-items-center"
+                        style={{"padding-left": "30px","padding-top": "5px","font-weight": "bold"}}
+                      >
+                        pending task
+                        <span style={{"font-size": "18px", "color": "rgb(6, 170, 68)", "padding-right": "30px"}}>
+                          {" "}
+                          27
+                        </span>
+                      </li>
+                    </ul> */}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+              <div class="Cards_custom__card__style__1fFQJ">
+                <div class="Cards_card__header__1H8GS"></div>
+                <div class="card Cards_card__border__xEgVC p-3">
+                  <div class="Dashboard_chart__topic__3JSqN">Webkata</div>
+                  <div class="Dashboard_card__body__2t5M0 mb-5">
+                    <div class="Dashboard_card__heading__LZe4X">
+                      <div class="Dashboard_card__title__3xUJ_">
+                      Webkata
+                      </div>
+                      <div class="Dashboard_attendance__number__3pO5v">
+                        6.90%
+                      </div>
+                    </div>
+                    <ul class="list-group mt-2">
+                      <li
+                        class="d-flex justify-content-between align-items-center"
+                        style={{"padding-left": "30px","padding-top": "5px","font-weight": "bold"}}
+                      >
+                        submitted task
+                        <span
+                          class="456"
+                          style={{"padding-left": "30px","padding-top": "5px","font-weight": "bold"}}
+                        >
+                          {" "}
+                          {webK}
+                        </span>
+                      </li>
+                    </ul>
+                    {/* <ul class="list-group mt-2">
+                      <li
+                        class="d-flex justify-content-between align-items-center"
+                        style={{"padding-left": "30px","padding-top": "5px","font-weight": "bold"}}
+                      >
+                        pending task
+                        <span style={{"font-size": "18px", "color": "rgb(6, 170, 68)", "padding-right": "30px"}}>
+                          {" "}
+                          27
+                        </span>
+                      </li>
+                    </ul> */}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* <div class="col-md-6 col-lg-6">
+              <div class="Cards_custom__card__style__1fFQJ">
+                <div class="Cards_card__header__1H8GS"></div>
+                <div class="card Cards_card__border__xEgVC p-3">
+                  <div class="Dashboard_chart__topic__3JSqN">
+                    Mock Interview
+                  </div>
+                  <div class="Dashboard_card__body__2t5M0">
+                    <div class="Dashboard_card__heading__LZe4X">
+                      <div class="Dashboard_card__title__3xUJ_">
+                        Mock Interview Average Score
+                      </div>
+                      <div class="Dashboard_attendance__number__3pO5v">
+                        0.88
+                      </div>
+                    </div>
+                    <ul class="list-group mt-2">
+                      <li
+                        class="d-flex justify-content-between align-items-center"
+                        style={{"padding-left": "30px", "padding-top": "5px", "font-weight": "bold"}}
+                      >
+                        Mock Interview - 2
+                        <span  style={{"font-size": "18px" ,"color": "rgb(6, 170, 68)", "padding-right": "30px"}}>
+                          {" "}
+                          0
+                        </span>
+                      </li>
+                    </ul>
+                    <ul class="list-group mt-2">
+                      <li
+                        class="d-flex justify-content-between align-items-center"
+                        style={{"padding-left": "30px", "padding-top": "5px", "font-weight": "bold"}}
+                      >
+                        Mock Interview - 1
+                        <span  style={{"font-size": "18px" ,"color": "rgb(6, 170, 68)", "padding-right": "30px"}}>
+                          {" "}
+                          0.75
+                        </span>
+                      </li>
+                    </ul>
+                    <ul class="list-group mt-2">
+                      <li
+                        class="d-flex justify-content-between align-items-center"
+                        style={{"padding-left": "30px", "padding-top": "5px", "font-weight": "bold"}}
+                      >
+                        Mock Interview - 2
+                        <span  style={{"font-size": "18px" ,"color": "rgb(6, 170, 68)", "padding-right": "30px"}}>
+                          {" "}
+                          1.9
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div> */}
+          </div>
           <div class="d-flex justify-content-center">
             <div class="col-md-6 col-lg-6">
               <div class="Cards_custom__card__style__1fFQJ">
@@ -91,29 +277,52 @@ const Dashboard = () => {
                       <div class="Dashboard_card__title__3xUJ_">
                         Task submission
                       </div>
-                      <div class="Dashboard_attendance__number__3pO5v">{per}%</div>
+                      <div class="Dashboard_attendance__number__3pO5v">
+                        {per}%
+                      </div>
                     </div>
                     <ul class="list-group mt-2">
                       <li
                         class="d-flex justify-content-between align-items-center"
-                        style={{"padding-left": "30px", "padding-top": "5px", "font-weight": "bold"}}
+                        style={{
+                          "padding-left": "30px",
+                          "padding-top": "5px",
+                          "font-weight": "bold",
+                        }}
                       >
                         submitted task
-                        <span className="456" style={{"padding-left": "30px", "padding-top": "5px", "font-weight": "bold"}}>
+                        <span
+                          className="456"
+                          style={{
+                            "padding-left": "30px",
+                            "padding-top": "5px",
+                            "font-weight": "bold",
+                          }}
+                        >
                           {" "}
-                          {(countT.count)}
+                          {countT.count}
                         </span>
                       </li>
                     </ul>
                     <ul class="list-group mt-2">
                       <li
                         class="d-flex justify-content-between align-items-center"
-                        style={{"padding-left": "30px", "padding-top": "5px", "font-weight": "bold"}}
+                        style={{
+                          "padding-left": "30px",
+                          "padding-top": "5px",
+                          "font-weight": "bold",
+                        }}
                       >
                         pending task
-                        <span style={{"font-size": "18px" ,"color": "rgb(6, 170, 68)", "padding-right": "30px"}}>
+                        <span
+                          style={{
+                            "font-size": "18px",
+                            color: "rgb(6, 170, 68)",
+                            "padding-right": "30px",
+                          }}
+                        >
                           {" "}
-                          {29 -countT.count}
+                          {29 - countT.count}
                         </span>
                       </li>
                     </ul>
@@ -121,6 +330,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+      
             {/* <div class="col-md-6 col-lg-6">
               <div class="Cards_custom__card__style__1fFQJ">
                 <div class="Cards_card__header__1H8GS"></div>
