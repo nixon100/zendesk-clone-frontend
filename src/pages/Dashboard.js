@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/codekata/total")
+      .get("https://zendesk-clone-backend.onrender.com/api/codekata/total")
       .then((response) => {
         console.log(response.data);
         const data = response.data
@@ -31,7 +31,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/codekata/submission")
+      .get("https://zendesk-clone-backend.onrender.com/api/codekata/submission")
       .then((response) => {
         console.log(response.data);
         setCodeK(response.data.count); // This should log the data from the Capstone collection
@@ -42,7 +42,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/webkata/submission")
+      .get("https://zendesk-clone-backend.onrender.com/api/webkata/submission")
       .then((response) => {
         console.log(response.data.count);
         setWebK(response.data.count); // This should log the data from the Capstone collection
@@ -53,7 +53,7 @@ const Dashboard = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:8800/api/webkata/total")
+      .get("https://zendesk-clone-backend.onrender.com/api/webkata/total")
       .then((response) => {
         console.log(response.data);
         const data = response.data
