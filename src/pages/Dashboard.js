@@ -143,7 +143,7 @@ const Dashboard = () => {
                   <div class="Dashboard_card__body__2t5M0 mb-5">
                     <div class="Dashboard_card__heading__LZe4X">
                       <div class="Dashboard_card__title__3xUJ_">
-                      Codekata
+                      Points Earned
                       </div>
                       <div class="Dashboard_attendance__number__3pO5v">
                         {totalC}
@@ -188,7 +188,7 @@ const Dashboard = () => {
                   <div class="Dashboard_card__body__2t5M0 mb-5">
                     <div class="Dashboard_card__heading__LZe4X">
                       <div class="Dashboard_card__title__3xUJ_">
-                      Webkata
+                      Points Earned
                       </div>
                       <div class="Dashboard_attendance__number__3pO5v">
                        {totalW}

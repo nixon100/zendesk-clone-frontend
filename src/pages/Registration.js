@@ -81,8 +81,8 @@ const Registration = (e) => {
 
     if (!values.city) {
       errors.city = "Required";
-    } else if (values.city.length > 10) {
-      errors.city = "Must be 10 characters or less";
+    } else if (values.city.length > 15) {
+      errors.city = "Must be 15 characters or less";
     }
 
     if (!values.phone) {
@@ -95,8 +95,8 @@ const Registration = (e) => {
 
     if (!values.batch) {
       errors.batch = "Required";
-    } else if (values.batch.length > 10) {
-      errors.batch = "Must be 10 characters or less";
+    } else if (values.batch.length > 20) {
+      errors.batch = "Must be 20 characters or less";
     }
 
     if (!values.gender) {
@@ -107,7 +107,7 @@ const Registration = (e) => {
     if (!values.confirmpassword) {
       errors.confirmpassword = "Required";
     } else if (values.confirmpassword.length > 10) {
-      errors.confirmpassword = "Must be 15 characters or less";
+      errors.confirmpassword = "Must be 10 characters or less";
     } else if (values.confirmpassword !== values.password) {
       errors.confirmpassword = "Password not equal";
     }
